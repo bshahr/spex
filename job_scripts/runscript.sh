@@ -1,0 +1,1 @@
+python /home/ziyuw/projects/spearmint/spearmint/spearmint/main.py --driver=local --method=GPEIOptChooser --max-finished-jobs=4 --method-args=noiseless=1 ./copies/braninpy-$1-10/config.pb
