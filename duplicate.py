@@ -59,7 +59,7 @@ def copyFolder(name='braninpy', num=20):
 	fname = write_PBS_script(name, serial, num, getPath('job_scripts/'))
 
 
-	execute = 'qsub -l walltime=5:00:00, mem=2gb {}'.format(fname)
+	execute = 'qsub -l walltime=5:00:00,mem=2gb {}'.format(fname)
 	print execute
 
 	return serial
