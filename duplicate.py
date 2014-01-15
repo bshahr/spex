@@ -18,7 +18,7 @@ def write_PBS_script(folder, serial, num, path):
 #PBS -M ziyucwang@gmail.com
 #PBS -m bea
 #PBS -V
-#PBS -l nodes=1:ppn=4
+#PBS -l nodes=1:ppn=2
 
 cd $PBS_O_WORKDIR
 echo "Current working directory is `pwd`"
