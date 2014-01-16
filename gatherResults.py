@@ -39,7 +39,7 @@ def processFile(name, folder):
 	l = np.asarray(l[:-1], dtype=float)
 	m = np.asarray([np.min(l[:i+1]) for i in range(l.shape[0])])
 
-	lm = np.log10(m - computeBest(name[:-2]))
+	lm = np.log10(m - (-computeBest(name[:-2])))
 
 	return lm
 
