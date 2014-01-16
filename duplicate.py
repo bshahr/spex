@@ -3,7 +3,7 @@ import distutils.core
 import re
 import random
 
-def write_PBS_script(folder, serial, num, path):
+def write_PBS_script(num, path, codeline, serial):
 	content = """
 #!/bin/bash
 #PBS -S /bin/bash
@@ -25,9 +25,9 @@ echo "Current working directory is `pwd`"
 echo PBS_ARRAYID=$PBS_ARRAYID
 # Run
 echo "Starting run: $(date)"
-/home/ziyuw/projects/expSpearmint/job_scripts/runscript.sh {} {} $PBS_ARRAYID
+{}
 echo "Run complete: $(date)"
-""".format(num, folder, serial)
+""".format(num, codeline)
 	
 	fname = path + 'job_scripts_{}.pbs'.format(serial)
 	f = open(fname, 'w')
@@ -37,12 +37,15 @@ echo "Run complete: $(date)"
 	return fname
 
 
-def copyFolder(name='braninpy', num=20):
+def getPath(subfolder):
+	lpath = re.sub(r'duplicate.pyc?', subfolder, \
+    	os.path.abspath(__file__))
+	return lpath
 
-	def getPath(subfolder):
-		lpath = re.sub(r'duplicate.pyc?', subfolder, \
-        	os.path.abspath(__file__))
-		return lpath
+
+def prepareSpearmint(name='braninpy', num=20):
+
+	
 
 	origPath = getPath('fcts/{}/'.format(name))
 
@@ -56,7 +59,10 @@ def copyFolder(name='braninpy', num=20):
 		distutils.dir_util.copy_tree(origPath, destPath)
 
 
-	fname = write_PBS_script(name, serial, num, getPath('job_scripts/'))
+	line = '{}job_scripts/runscript.sh {} {} $PBS_ARRAYID'.\
+		format(getPath(''), name, serial)
+
+	fname = write_PBS_script(num, getPath('job_scripts/'), line, serial)
 
 
 	execute = 'qsub -l walltime=5:00:00,mem=2gb {}'.format(fname)
@@ -64,8 +70,23 @@ def copyFolder(name='braninpy', num=20):
 
 	return serial
 
+def preparePybo(name='branin', num=20):
+
+	serial = str(random.randint(1e9, 1e10))
+	line = 'python {}job_scripts/runSynthetic.py -n {} -s {} -a $PBS_ARRAYID'.\
+		format(getPath(''), name, serial)
+
+	fname = write_PBS_script(num, getPath('job_scripts/'), line, serial)
+
+	execute = 'qsub -l walltime=5:00:00,mem=2gb {}'.format(fname)
+	print execute
+
+	return serial
+
+
 if __name__ == '__main__':
-	copyFolder('braninpy', 20)
+	# prepareSpearmint('braninpy', 20)
+	preparePybo('branin', 20)
 	# copyFolder('hart3py', 20)
 	# copyFolder('hart6py', 20)
 
