@@ -1,7 +1,7 @@
 from os import listdir
 from os.path import isfile, isdir, join
 import numpy as np
-import re, os
+import re, os, sys, getopt
 from bo.demos.testFuncs import computeBest
 
 
@@ -56,5 +56,28 @@ def processAll(name='braninpy', serial='9859162815'):
 	np.save('./result-{}-{}.mat'.format(name, serial), \
 		np.vstack(all_results))
 
+def main(argv):                         
+	name = ''
+	serial = ''
+	try:
+		opts, args = getopt.getopt(argv,"hn:s:",["name=","serial="])
+	except getopt.GetoptError:
+		print 'test.py -i <name> -o <serial>'
+		sys.exit(2)
+	for opt, arg in opts:
+		if opt == '-h':
+			print 'gatherResults.py -n <name> -s <serial>'
+			sys.exit()
+		elif opt in ("-n", "--name"):
+			name = arg
+		elif opt in ("-s", "--serial"):
+			serial = arg
+
+	if not (name == '' or serial == ''):
+		processAll(name, serial)
+	else:
+		print 'gatherResults.py -n <name> -s <serial>'
+
+
 if __name__ == '__main__':
-	processAll(name='braninpy', serial='9859162815')
+	main(sys.argv[1:])
