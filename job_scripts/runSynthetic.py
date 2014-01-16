@@ -33,9 +33,9 @@ def main(argv):
 		return
 
 	if name == 'branin':
-		result = testBranin(numIter=149)
+		result = testBranin(numIter=99)
 	elif name == 'hart3':
-		result = testHart3(numIter=149)
+		result = testHart3(numIter=99)
 	else:
 		print 'Not valid name given.'
 
