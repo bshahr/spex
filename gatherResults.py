@@ -2,6 +2,7 @@ from os import listdir
 from os.path import isfile, isdir, join
 import numpy as np
 import re, os
+from bo.demos.testFuncs import computeBest
 
 
 def getPath(subfolder):
@@ -17,7 +18,7 @@ def findFolders(name='braninpy', serial='9859162815'):
 	return folders
 
 
-def processFile(folder):
+def processFile(name, folder):
 	try:
 		folder = folder+'output/'
 		onlyfiles = [ f for f in listdir(folder) if isfile(join(folder, f)) ]
@@ -25,20 +26,20 @@ def processFile(folder):
 		return []
 
 	onlyfiles = sorted(onlyfiles)
-	print onlyfiles
 
 	l = []
-	for name in onlyfiles:
-		name = folder + name
+	for path in onlyfiles:
+		path = folder + path
 		try:
-			f = open(name)
+			f = open(path)
 			l.append(float(f.read().split('\n')[6].split()[-1]))
 		except:
 			continue
 
 	l = np.asarray(l[:-1], dtype=float)
 	m = np.asarray([np.min(l[:i+1]) for i in range(l.shape[0])])
-	lm = np.log10(m - 0.039788735773)
+
+	lm = np.log10(m - computeBest(name[:-2]))
 
 	return lm
 
@@ -46,9 +47,14 @@ def processFile(folder):
 def processAll(name='braninpy', serial='9859162815'):
 	folders = findFolders(name, serial)
 
-	for folder in folders:
-		print processFile(folder)
 
+	all_results = []
+	for folder in folders:
+		ldis = processFile(name, folder)
+		all_results.append(ldis)
+
+	numpy.save('./result-{}-{}.mat'.format(name, serial), \
+		np.vstack(all_results))
 
 if __name__ == '__main__':
 	processAll(name='braninpy', serial='9859162815')
