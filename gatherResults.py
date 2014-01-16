@@ -24,6 +24,9 @@ def processFile(folder):
 	except:
 		return []
 
+	onlyfiles = sorted(onlyfiles)
+	print onlyfiles
+
 	l = []
 	for name in onlyfiles:
 		name = folder + name
