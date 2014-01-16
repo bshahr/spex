@@ -53,7 +53,7 @@ def processAll(name='braninpy', serial='9859162815'):
 		ldis = processFile(name, folder)
 		all_results.append(ldis)
 
-	numpy.save('./result-{}-{}.mat'.format(name, serial), \
+	np.save('./result-{}-{}.mat'.format(name, serial), \
 		np.vstack(all_results))
 
 if __name__ == '__main__':
