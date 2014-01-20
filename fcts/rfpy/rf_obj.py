@@ -52,7 +52,7 @@ def transform(params):
 
 
 def call(x):
-    print float(subprocess.check_output(convert(transform(x)).split()))
+    return float(subprocess.check_output(convert(transform(x)).split()))
 
 
 # Write a function like this called 'main'
