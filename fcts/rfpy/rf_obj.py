@@ -51,8 +51,15 @@ def transform(params):
     return list(params)
 
 
-def call(x):
-    return float(subprocess.check_output(convert(transform(x)).split()))
+def call(x, path=None):
+    cmd = convert(transform(x))
+    result = float(subprocess.check_output(cmd.split()))
+    if not path is None:
+        f = open('{}record.txt'.format(path), 'a')
+        f.write(cmd)
+        f.write(result); f.write('\n'); f.write('\n')
+
+    return result
 
 
 # Write a function like this called 'main'
@@ -61,6 +68,24 @@ def main(job_id, params):
     print params
     return call(params['X'])
 
+
+def testRF(numIter=149, path=None):
+    
+    # nr.seed(387)
+
+    obj = lambda x: call(x, path=path)
+    bounds = [(0., 1.) for i in range(14)]
+    hyp = np.array([.5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, 1.])
+    # init_x = generateRandInit(bounds)
+    init_x = np.array([0.5]*len(bounds))
+    init_f = call(init_x, path)
+
+    
+    bo = BayesOpt(init_x, init_f, hyp, bounds, covModel='MaternArd', \
+        acq='Thompson', noise=1e-4)
+    bo.opt(obj, numIter=numIter, featureSize=1000)
+
+    return bo.model.Y[:bo.model.n]
 
 if __name__ == '__main__':
     x = nr.rand(14)

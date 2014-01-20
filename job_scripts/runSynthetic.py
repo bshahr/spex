@@ -1,5 +1,5 @@
 from bo.demos.testSynthetic import testBranin, testHart3
-from rf_obj import testRF
+from expSpearmint.fcts.rfpy.rf_obj import testRF
 import numpy as np
 import re, os, sys, getopt
 
@@ -33,16 +33,16 @@ def main(argv):
 		print 'runSynthetic.py -n <name> -s <serial> -a <arrayid>' 
 		return
 
+	path = getPath('out-{}-{}/'.format(name, serial))
+
 	if name == 'branin':
 		result = testBranin(numIter=99)
 	elif name == 'hart3':
 		result = testHart3(numIter=99)
 	elif name == 'rf':
-		result = testRF(numIter=149)
+		result = testRF(numIter=149, path)
 	else:
 		print 'Not valid name given.'
-
-	path = getPath('out-{}-{}/'.format(name, serial))
 
 	try:
 	    os.stat(path)
