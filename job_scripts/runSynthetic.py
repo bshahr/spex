@@ -40,7 +40,7 @@ def main(argv):
 	elif name == 'hart3':
 		result = testHart3(numIter=99)
 	elif name == 'rf':
-		result = testRF(numIter=149, path)
+		result = testRF(numIter=149, path=path)
 	else:
 		print 'Not valid name given.'
 
