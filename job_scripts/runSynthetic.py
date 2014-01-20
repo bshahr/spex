@@ -34,7 +34,7 @@ def main(argv):
 		return
 
 	path = getPath('out-{}-{}/'.format(name, serial))
-	
+
 	try:
 	    os.stat(path)
 	except:
@@ -45,7 +45,7 @@ def main(argv):
 	elif name == 'hart3':
 		result = testHart3(numIter=99)
 	elif name == 'rf':
-		result = testRF(numIter=149, path=path)
+		result = testRF(numIter=149, path=path, arrayid=arrayid)
 	else:
 		print 'Not valid name given.'
 
