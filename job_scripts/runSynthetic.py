@@ -34,6 +34,7 @@ def main(argv):
 		return
 
 	path = getPath('out-{}-{}/'.format(name, serial))
+	os.mkdir(path)
 
 	if name == 'branin':
 		result = testBranin(numIter=99)
