@@ -59,14 +59,15 @@ def processAll(name='braninpy', serial='9859162815'):
 def main(argv):                         
 	name = ''
 	serial = ''
+	usage = 'gatherResults.py -n <name> -s <serial>'
 	try:
 		opts, args = getopt.getopt(argv,"hn:s:",["name=","serial="])
 	except getopt.GetoptError:
-		print 'test.py -i <name> -o <serial>'
+		print usage
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-h':
-			print 'gatherResults.py -n <name> -s <serial>'
+			print usage
 			sys.exit()
 		elif opt in ("-n", "--name"):
 			name = arg
@@ -76,7 +77,7 @@ def main(argv):
 	if not (name == '' or serial == ''):
 		processAll(name, serial)
 	else:
-		print 'gatherResults.py -n <name> -s <serial>'
+		print usage
 
 
 if __name__ == '__main__':
