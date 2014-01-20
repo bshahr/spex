@@ -1,6 +1,8 @@
 import numpy as np
 import numpy.random as nr
 import subprocess
+from bo.bayesOpt import BayesOpt
+from bo.demos.testFuncs import branin, hart3, hart6, computeBest
 
 def convert(params):
     path = \
