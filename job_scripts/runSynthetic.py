@@ -1,4 +1,5 @@
 from bo.demos.testSynthetic import testBranin, testHart3
+from rf_obj import testRF
 import numpy as np
 import re, os, sys, getopt
 
@@ -36,6 +37,8 @@ def main(argv):
 		result = testBranin(numIter=99)
 	elif name == 'hart3':
 		result = testHart3(numIter=99)
+	elif name == 'rf':
+		result = testRF(numIter=149)
 	else:
 		print 'Not valid name given.'
 

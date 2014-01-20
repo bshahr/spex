@@ -1,5 +1,7 @@
-import numpy as np
+from bo.bayesOpt import BayesOpt
+from bo.demos.testFuncs import branin, hart3, hart6, computeBest
 import numpy.random as nr
+import numpy as np
 import subprocess
 
 def convert(params):
@@ -52,11 +54,22 @@ def transform(params):
 
 
 def call(x):
-    subprocess.call([convert(transform(x))])
+    return float(subprocess.check_output(convert(transform(x)).split()))
 
+def testRF(numIter=149):
+	
+	# nr.seed(387)
 
-if __name__ == '__main__':
-    some = nr.rand(14)
-    call(x)
+	obj = lambda x: call(x)
+	bounds = [(0., 1.) for i in range(14)]
+	hyp = np.array([.5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, 1.])
+	# init_x = generateRandInit(bounds)
+	init_x = np.array([0.5]*len(bounds))
+	init_f = call(init_x)
 
-    
+	
+	bo = BayesOpt(init_x, init_f, hyp, bounds, covModel='MaternArd', \
+		acq='Thompson', noise=1e-4)
+	bo.opt(obj, numIter=numIter, featureSize=1000)
+
+	return bo.model.Y[:bo.model.n]

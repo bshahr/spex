@@ -85,8 +85,9 @@ def preparePybo(name='branin', num=20):
 
 
 if __name__ == '__main__':
-	# prepareSpearmint('braninpy', 20)
-	preparePybo('branin', 20)
+	prepareSpearmint('rfpy', 20)
+	# preparePybo('branin', 20)
+	# preparePybo('rfpy', 20)
 	# copyFolder('hart3py', 20)
 	# copyFolder('hart6py', 20)
 
