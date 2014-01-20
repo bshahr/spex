@@ -1,5 +1,5 @@
 from bo.demos.testSynthetic import testBranin, testHart3
-from expSpearmint.fcts.rfpy.rf_obj import testRF
+from fcts.rfpy.rf_obj import testRF
 import numpy as np
 import re, os, sys, getopt
 
