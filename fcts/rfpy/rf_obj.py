@@ -56,8 +56,8 @@ def call(x, path=None):
     result = float(subprocess.check_output(cmd.split()))
     if not path is None:
         f = open('{}record.txt'.format(path), 'a')
-        f.write(cmd)
-        f.write(result); f.write('\n'); f.write('\n')
+        f.write(cmd); f.write('\n')
+        f.write(str(result)); f.write('\n'); f.write('\n')
 
     return result
 

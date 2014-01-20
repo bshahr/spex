@@ -34,7 +34,11 @@ def main(argv):
 		return
 
 	path = getPath('out-{}-{}/'.format(name, serial))
-	os.mkdir(path)
+	
+	try:
+	    os.stat(path)
+	except:
+	    os.mkdir(path) 
 
 	if name == 'branin':
 		result = testBranin(numIter=99)
@@ -45,10 +49,7 @@ def main(argv):
 	else:
 		print 'Not valid name given.'
 
-	try:
-	    os.stat(path)
-	except:
-	    os.mkdir(path) 
+	
 
 	np.save('{}pybo-result-{}-{}'.format(path, name, arrayid), result)
 
