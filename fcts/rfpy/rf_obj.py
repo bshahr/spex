@@ -9,12 +9,13 @@ def convert(params):
         '/home/ziyuw/projects/jointtracking_ziyu/depth_to_bodyparts/'
     
     padding = np.array([500000, 0.001, 100, 0.001, 100])
-    params = np.hstack([padding, params[1:]])
+    params = np.hstack([padding, params])
 
     param_dict = {'key{}'.format(key+1): value for \
         (key, value) in enumerate(params)}
     param_dict['dataset_name'] = '1000_dataset_1000000'
     param_dict['path'] = path
+    
     
     
     discrete_indices = ['key1', 'key3', 'key5', 'key6', 'key7', 'key8']
@@ -94,7 +95,7 @@ def testRF(numIter=149, path=None, arrayid=None):
     return bo.model.Y[:bo.model.n]
 
 if __name__ == '__main__':
-    x = nr.rand(14)
+    x = nr.rand(13)
     call(x)
 
     
