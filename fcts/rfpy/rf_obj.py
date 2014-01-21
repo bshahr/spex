@@ -80,8 +80,8 @@ def testRF(numIter=149, path=None, arrayid=None):
     # nr.seed(387)
 
     obj = lambda x: call(x, path=path, arrayid=arrayid)
-    bounds = [(0., 1.) for i in range(14)]
-    hyp = np.array([.5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, 1.])
+    bounds = [(0., 1.) for i in range(13)]
+    hyp = np.array([.5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, 1.])
     # init_x = generateRandInit(bounds)
     init_x = np.array([0.5]*len(bounds))
     init_f = call(init_x, path, arrayid=arrayid)

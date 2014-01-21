@@ -4,7 +4,7 @@ name:     "rf_obj"
 variable {
  name: "X"
  type: FLOAT
- size: 14
+ size: 13
  min:  0
  max:  1
 }
