@@ -45,7 +45,7 @@ def main(argv):
 	elif name == 'hart3':
 		result = testHart3(numIter=99)
 	elif name == 'rf':
-		result = testRF(numIter=149, path=path, arrayid=arrayid)
+		result = testRF(numIter=199, path=path, arrayid=arrayid)
 	else:
 		print 'Not valid name given.'
 
