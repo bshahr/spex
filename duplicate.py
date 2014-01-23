@@ -42,10 +42,10 @@ def getPath(subfolder):
     	os.path.abspath(__file__))
 	return lpath
 
+def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
+	noiseless=0, use_grad=0):
 
-def prepareSpearmint(name='braninpy', num=20):
-
-	
+	methods = ['GPEIOptChooser', 'GPThompsonOptChooser']
 
 	origPath = getPath('fcts/{}/'.format(name))
 
@@ -58,9 +58,9 @@ def prepareSpearmint(name='braninpy', num=20):
 		os.mkdir(destPath)
 		distutils.dir_util.copy_tree(origPath, destPath)
 
-
-	line = '{}job_scripts/runscript.sh {} {} $PBS_ARRAYID'.\
-		format(getPath(''), name, serial)
+	line = '{}job_scripts/runscript.sh {} {} $PBS_ARRAYID {} {} {} {}'.\
+		format(getPath(''), name, serial, methods[0], \
+		max_num, noiseless, use_grad)
 
 	fname = write_PBS_script(num, getPath('job_scripts/'), line, serial)
 
@@ -83,9 +83,18 @@ def preparePybo(name='branin', num=20):
 
 	return serial
 
-
 if __name__ == '__main__':
 	prepareSpearmint('rfpy', 20)
+
+	prepareSpearmint('lda_grid', 20, method=1, max_num=50, \
+		noiseless=0, use_grad=0)
+
+	prepareSpearmint('svm_grid', 20, method=1, max_num=100, \
+		noiseless=0, use_grad=0)
+
+	prepareSpearmint('logistic', 20, method=1, max_num=100, \
+		noiseless=0, use_grad=1)
+
 	# preparePybo('branin', 20)
 	# preparePybo('rfpy', 20)
 	# copyFolder('hart3py', 20)
