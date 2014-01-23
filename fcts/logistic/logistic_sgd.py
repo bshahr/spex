@@ -35,7 +35,7 @@ References:
 """
 __docformat__ = 'restructedtext en'
 
-import numpy, time, cPickle, gzip, sys, os
+import numpy, time, cPickle, gzip, sys, os, re
 
 import theano
 import theano.tensor as T
@@ -195,7 +195,10 @@ def load_data(dataset):
     rval = [(train_set_x, train_set_y), (valid_set_x,valid_set_y), (test_set_x, test_set_y)]
     return rval
 
-
+def getPath(subfolder):
+    lpath = re.sub(r'logistic_sgd.pyc?', subfolder, \
+        os.path.abspath(__file__))
+    return lpath
 
 
 def sgd_optimization_mnist(learning_rate=-3, n_epochs=1000, 
@@ -224,7 +227,7 @@ def sgd_optimization_mnist(learning_rate=-3, n_epochs=1000,
     learning_rate = numpy.exp(-numpy.float(learning_rate))
     l1_reg = numpy.float(l1_reg)
     l2_reg = numpy.float(l2_reg)
-    datasets = load_data(dataset)
+    datasets = load_data(getPath(dataset))
 
     train_set_x, train_set_y = datasets[0]
     valid_set_x, valid_set_y = datasets[1]
