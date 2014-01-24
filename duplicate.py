@@ -87,7 +87,7 @@ def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
 		os.mkdir(destPath)
 		distutils.dir_util.copy_tree(origPath, destPath)
 
-	line = '{}job_scripts/runscript.sh {} {} $PBS_ARRAYID {} {} {} {}'.\
+	line = '{}job_scripts/runscript.sh {} {} $PBS_ARRAYID {} {} {} {} &'.\
 		format(getPath(''), name, serial, methods[method], \
 		max_num, noiseless, use_grad)
 
@@ -100,7 +100,7 @@ def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
 	return serial
 
 
-def prepareSpearmint_loop(name='braninpy', num=20, single_num = 4, method=1, \
+def prepareSpearmint_loop(name='braninpy', num=20, single_num=2, method=1, \
 	max_num=100, noiseless=0, use_grad=0):
 
 	methods = ['GPEIOptChooser', 'GPThompsonOptChooser']
