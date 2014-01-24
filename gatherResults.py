@@ -3,6 +3,7 @@ from os.path import isfile, isdir, join
 import numpy as np
 import re, os, sys, getopt
 from bo.demos.testFuncs import computeBest
+from numpy import genfromtxt
 import string
 
 
@@ -20,26 +21,30 @@ def findFolders(name='braninpy', serial='9859162815'):
 
 
 def processFile(name, folder):
-	try:
-		folder = folder+'output/'
-		onlyfiles = [ f for f in listdir(folder) if isfile(join(folder, f)) ]
-	except:
-		return []
+	# try:
+	# 	folder = folder+'output/'
+	# 	onlyfiles = [ f for f in listdir(folder) if isfile(join(folder, f)) ]
+	# except:
+	# 	return []
 
-	onlyfiles = sorted(onlyfiles)
+	# onlyfiles = sorted(onlyfiles)
 
-	l = []
-	for path in onlyfiles:
-		path = folder + path
-		try:
-			f = open(path)
-			for line in f.read().split('\n'):
-				if string.join(line.split()[:2]) == 'Got result':
-					l.append(float(line.split()[-1]))
-		except:
-			continue
-	l = np.asarray(l[:-1], dtype=float)
-	lm = np.asarray([np.min(l[:i+1]) for i in range(l.shape[0])])
+	# l = []
+	# for path in onlyfiles:
+	# 	path = folder + path
+	# 	try:
+	# 		f = open(path)
+	# 		for line in f.read().split('\n'):
+	# 			if string.join(line.split()[:2]) == 'Got result':
+	# 				l.append(float(line.split()[-1]))
+	# 	except:
+	# 		continue
+	# l = np.asarray(l[:-1], dtype=float)
+	# lm = np.asarray([np.min(l[:i+1]) for i in range(l.shape[0])])
+	
+	d = genfromtxt('{}trace.csv'.format(folder), delimiter=',')[:, [1, 5]]
+	indices = [int(index) for index in np.unique(d[:, 1]) if index > 0]
+	lm = d[indices, 0]
 
 	return lm
 

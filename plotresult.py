@@ -79,12 +79,14 @@ if __name__ == '__main__':
 
 	############################################################################
 	# LDA
-	# resultLADT = np.load('./results/result-Th-lda_grid-7116524198.npy')[:, :50]
-	# resultLADEI = np.load('./results/result-EI-lda_grid-6460751781.npy')[:, :50]
-	# results = {'EI-MCMC':(resultLADEI, 'blue'), \
-	# 		   'Thompson-MCMC':(resultLADT, 'green')}
-	# title = 'LDA'
-	# lineplot(title, results, y_minmax=(1250, 1300))
+	resultLADT = np.load('./results/result-Th-lda_grid-8362524370.mat.npy')[:, :50]
+
+	print resultLADT
+	resultLADEI = np.load('./results/result-EI-lda_grid-6460751781.npy')[:, :50]
+	results = {'EI-MCMC':(resultLADEI, 'blue'), \
+			   'Thompson-MCMC':(resultLADT, 'green')}
+	title = 'LDA'
+	lineplot(title, results, y_minmax=(1264, 1272))
 	############################################################################
 
 
@@ -93,13 +95,23 @@ if __name__ == '__main__':
 	############################################################################
 	# SVM
 	resultSVMEI = np.load('./results/result-EI-svm_grid-3536553150.npy')[:, :100]
-	resultSVMTh = np.load('./results/result-Th-svm_grid-5098544060.npy')[:, :100]
+	resultSVMTh = np.load('./results/result-Th-svm_grid-9116037553.mat.npy')[:, :100]
 	
 	results = {'EI-MCMC':(resultSVMEI, 'blue'), \
 			   'Thompson-MCMC':(resultSVMTh, 'green')}
 	title = 'SVM'
-	lineplot(title, results, y_minmax=(0.24, 0.4))
+	lineplot(title, results, y_minmax=(0.24, 0.3))
 	############################################################################
+
+
+	############################################################################
+	# Logistic
+	# resultLogEI = np.load('./results/result-EI-logistic-8569332912.npy')[:, :100]
+	# resultLogTh = np.load('./results/result-Th-svm_grid-5098544060.npy')[:, :100]
+	
+	# results = {'EI-MCMC':(resultLogEI, 'blue')}
+	# title = 'Logistic'
+	# lineplot(title, results)
 
 
 	# seaborn_plot()
