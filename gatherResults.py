@@ -3,6 +3,7 @@ from os.path import isfile, isdir, join
 import numpy as np
 import re, os, sys, getopt
 from bo.demos.testFuncs import computeBest
+import string
 
 
 def getPath(subfolder):
@@ -32,14 +33,13 @@ def processFile(name, folder):
 		path = folder + path
 		try:
 			f = open(path)
-			l.append(float(f.read().split('\n')[6].split()[-1]))
+			for line in f.read().split('\n'):
+				if string.join(line.split()[:2]) == 'Got result':
+					l.append(float(line.split()[-1]))
 		except:
 			continue
-
 	l = np.asarray(l[:-1], dtype=float)
-	m = np.asarray([np.min(l[:i+1]) for i in range(l.shape[0])])
-
-	lm = np.log10(m - (-computeBest(name[:-2])))
+	lm = np.asarray([np.min(l[:i+1]) for i in range(l.shape[0])])
 
 	return lm
 
@@ -82,3 +82,4 @@ def main(argv):
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
+
