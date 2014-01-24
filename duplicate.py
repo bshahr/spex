@@ -59,7 +59,7 @@ def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
 		distutils.dir_util.copy_tree(origPath, destPath)
 
 	line = '{}job_scripts/runscript.sh {} {} $PBS_ARRAYID {} {} {} {}'.\
-		format(getPath(''), name, serial, methods[0], \
+		format(getPath(''), name, serial, methods[method], \
 		max_num, noiseless, use_grad)
 
 	fname = write_PBS_script(num, getPath('job_scripts/'), line, serial)
