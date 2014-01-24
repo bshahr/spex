@@ -66,7 +66,7 @@ def call(x, path=None, arrayid=None):
         f.write(cmd); f.write('\n')
         f.write(str(result)); f.write('\n'); f.write('\n')
 
-    return result
+    return 1. - result
 
 
 # Write a function like this called 'main'
