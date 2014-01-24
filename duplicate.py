@@ -84,16 +84,17 @@ def preparePybo(name='branin', num=20):
 	return serial
 
 if __name__ == '__main__':
-	prepareSpearmint('rfpy', 20)
-
-	prepareSpearmint('lda_grid', 20, method=1, max_num=50, \
+	prepareSpearmint('rfpy', 20, method=1, max_num=200, \
 		noiseless=0, use_grad=0)
 
-	prepareSpearmint('svm_grid', 20, method=1, max_num=100, \
-		noiseless=0, use_grad=0)
+	# prepareSpearmint('lda_grid', 20, method=1, max_num=50, \
+	# 	noiseless=0, use_grad=0)
 
-	prepareSpearmint('logistic', 20, method=1, max_num=100, \
-		noiseless=0, use_grad=1)
+	# prepareSpearmint('svm_grid', 20, method=1, max_num=100, \
+	# 	noiseless=0, use_grad=0)
+
+	# prepareSpearmint('logistic', 20, method=1, max_num=100, \
+	# 	noiseless=0, use_grad=1)
 
 	# preparePybo('branin', 20)
 	# preparePybo('rfpy', 20)
