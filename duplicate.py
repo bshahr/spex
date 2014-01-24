@@ -37,7 +37,7 @@ echo "Run complete: $(date)"
 	return fname
 
 
-def write_bash_script(num, single_num, path, codeline, serial):
+def write_bash_script(num, single_num, path, codeline, serial, name, method):
 	outerloop = "#!/bin/bash"
 
 	for i in range(num/single_num):
@@ -59,7 +59,7 @@ def write_bash_script(num, single_num, path, codeline, serial):
 
 	outerloop = outerloop + "\n"
 	
-	fname = path + 'loop_{}.sh'.format(serial)
+	fname = path + 'loop_{}_{}_{}.sh'.format(name, method, serial)
 	f = open(fname, 'w')
 	f.write(outerloop)
 	f.close()
@@ -121,7 +121,9 @@ def prepareSpearmint_loop(name='braninpy', num=20, single_num=4, method=1, \
 		max_num, noiseless, use_grad)
 
 	fname = write_bash_script(num, single_num, getPath('job_scripts/'), \
-		line, serial)
+		line, serial, name, method)
+
+	print fname
 
 	return serial
 
