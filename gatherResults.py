@@ -43,7 +43,8 @@ def processFile(name, folder):
 	# lm = np.asarray([np.min(l[:i+1]) for i in range(l.shape[0])])
 	
 	d = genfromtxt('{}trace.csv'.format(folder), delimiter=',')[:, [1, 5]]
-	indices = [int(index) for index in np.unique(d[:, 1]) if index > 0]
+	_, indices = np.unique(d[:, 1], return_index=True)
+	indices = [int(index) for index in indices if index > 0]
 	lm = d[indices, 0]
 
 	return lm
