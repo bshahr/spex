@@ -1,6 +1,7 @@
 import pylab as pl
 import numpy as np
 import seaborn as sns
+from bo.demos.testFuncs import computeBest
 import pandas as pd
 
 
@@ -25,8 +26,13 @@ def lineplot(title, results, logscale=False, y_minmax=None):
 
 		x_indices = np.arange(mean.shape[0])+1
 
+		# for i in xrange(result.shape[0]):
+		# 	pl.plot(x_indices, result[i, :], color=results[key][1], \
+		# 		linestyle='-', linewidth=.4)
+
+
 		a = sns.tsplot(result, err_style="boot_traces", \
-			n_boot=result.shape[0], label=key, color=results[key][1])
+			n_boot=5*result.shape[0], label=key, color=results[key][1])
 		# pl.fill_between(x_indices, mean-std, mean+std, \
 		# 	facecolor=results[key][1], alpha=0.2)
 		# a = pl.plot(x_indices, mean, color=results[key][1], \
@@ -48,30 +54,30 @@ def lineplot(title, results, logscale=False, y_minmax=None):
 if __name__ == '__main__':
 	############################################################################
 	# Branin
-	# resultBrEI = np.load('./results/result-braninpy-7859558362.npy')[:, :100]
-	# resultBrT = np.load('./results/out-branin-8683685435.npy')[:, :100]
+	resultBrEI = np.load('./results/result-braninpy-7859558362.npy')[:, :100]
+	resultBrT = np.load('./results/result-Th-braninpy-4677758221.npy')[:, :100]
 
-	# resultBrEI = np.exp(resultBrEI * np.log(10))
-	# resultBrT = np.exp(resultBrT * np.log(10))
+	resultBrEI = np.exp(resultBrEI * np.log(10))
+	resultBrT = resultBrT + computeBest('branin')
 
-	# results = {'EI-MCMC':(resultBrEI, 'blue'), \
-	# 		   'Thompson-MCMC':(resultBrT, 'green')}
-	# title = 'Branin'
-	# lineplot(title, results, logscale=True)
+	results = {'EI-MCMC':(resultBrEI, 'blue'), \
+			   'Thompson-MCMC':(resultBrT, 'green')}
+	title = 'Branin'
+	lineplot(title, results, logscale=True)
 	############################################################################
 
 
 	############################################################################
 	# Hartman 3
-	# resultBrEI = np.load('./results/result-hart3py-7277509593.npy')[:, :100]
-	# resultBrT = np.load('./results/out-hart3-2626550518.npy')[:, :100]
+	resultBrEI = np.load('./results/result-hart3py-7277509593.npy')[:, :100]
+	resultBrT = np.load('./results/result-Th-hart3py-2619135985.npy')[:, :100]
 
-	# resultBrEI = np.exp(resultBrEI * np.log(10))
-	# resultBrT = np.exp(resultBrT * np.log(10))
-	# results = {'EI-MCMC':(resultBrEI, 'blue'), \
-	# 		   'Thompson-MCMC':(resultBrT, 'green')}
-	# title = 'Hartmann 3'
-	# lineplot(title, results, logscale=True)
+	resultBrEI = np.exp(resultBrEI * np.log(10))
+	resultBrT = resultBrT + computeBest('hart3')
+	results = {'EI-MCMC':(resultBrEI, 'blue'), \
+			   'Thompson-MCMC':(resultBrT, 'green')}
+	title = 'Hartmann 3'
+	lineplot(title, results, logscale=True)
 	############################################################################
 
 
@@ -79,10 +85,8 @@ if __name__ == '__main__':
 
 	############################################################################
 	# LDA
-	resultLADT = np.load('./results/result-Th-lda_grid-8362524370.mat.npy')[:, :50]
-
-	print resultLADT
-	resultLADEI = np.load('./results/result-EI-lda_grid-6460751781.npy')[:, :50]
+	resultLADT = np.load('./results/result-Th-lda_grid-5016902829.npy')[:, :50]
+	resultLADEI = np.load('./results/result-EI-lda_grid-9417714409.npy')[:, :50]
 	results = {'EI-MCMC':(resultLADEI, 'blue'), \
 			   'Thompson-MCMC':(resultLADT, 'green')}
 	title = 'LDA'
@@ -94,8 +98,8 @@ if __name__ == '__main__':
 
 	############################################################################
 	# SVM
-	resultSVMEI = np.load('./results/result-EI-svm_grid-3536553150.npy')[:, :100]
-	resultSVMTh = np.load('./results/result-Th-svm_grid-9116037553.mat.npy')[:, :100]
+	resultSVMEI = np.load('./results/result-EI-svm_grid-6855126410.npy')[:, :100]
+	resultSVMTh = np.load('./results/result-Th-svm_grid-9491927685.npy')[:, :100]
 	
 	results = {'EI-MCMC':(resultSVMEI, 'blue'), \
 			   'Thompson-MCMC':(resultSVMTh, 'green')}
@@ -106,12 +110,11 @@ if __name__ == '__main__':
 
 	############################################################################
 	# Logistic
-	# resultLogEI = np.load('./results/result-EI-logistic-8569332912.npy')[:, :100]
-	# resultLogTh = np.load('./results/result-Th-svm_grid-5098544060.npy')[:, :100]
+	resultLogEI = np.load('./results/result-EI-logistic-8569332912.npy')[:, :100]
+	resultLogTh = np.load('./results/result-Th-logistic-1811594290.npy')[:, :100]
 	
-	# results = {'EI-MCMC':(resultLogEI, 'blue')}
-	# title = 'Logistic'
-	# lineplot(title, results)
+	results = {'EI-MCMC':(resultLogEI, 'blue'), \
+			   'Thompson-MCMC':(resultLogTh, 'green')}
+	title = 'Logistic'
+	lineplot(title, results)
 
-
-	# seaborn_plot()
