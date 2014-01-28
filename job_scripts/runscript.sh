@@ -1,1 +1,1 @@
-python /home/ziyuw/projects/spearmint/spearmint/spearmint/main.py --driver=local --method=$4 --max-finished-jobs=$5 --method-args=noiseless=$6 --use-gradient=$7 /home/ziyuw/projects/expSpearmint/copies/$1-$2-$3/config.pb
+python /home/ziyuw/projects/spearmint/spearmint/spearmint/main.py --driver=local --method=$4 --max-finished-jobs=$5 --method-args=noiseless=$6 --use-gradient=$7 --grid-seed=$3 /home/ziyuw/projects/expSpearmint/copies/$1-$2-$3/config.pb
