@@ -74,7 +74,7 @@ def getPath(subfolder):
 def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
     noiseless=0, use_grad=0):
 
-    methods = ['GPEIOptChooser', 'GPThompsonOptChooser']
+    methods = ['GPEIOptChooser', 'GPThompsonOptChooser', 'GPPortOptChooser']
 
     origPath = getPath('fcts/{}/'.format(name))
 
@@ -103,7 +103,7 @@ def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
 def prepareSpearmint_loop(name='braninpy', num=20, single_num=4, method=1, \
     max_num=100, noiseless=0, use_grad=0):
 
-    methods = ['GPEIOptChooser', 'GPThompsonOptChooser']
+    methods = ['GPEIOptChooser', 'GPThompsonOptChooser', 'GPPortOptChooser']
 
     origPath = getPath('fcts/{}/'.format(name))
 
