@@ -52,42 +52,57 @@ def lineplot(title, results, logscale=False, y_minmax=None):
 
 	pl.xlabel('No. of Fct. Evaluations ($t$)', fontsize=16)
 	if y_minmax is not None:
-		pl.axis([1, maxx, y_minmax[0], y_minmax[1]])
+		pl.axis([0, maxx, y_minmax[0], y_minmax[1]])
 
 	pl.title(title, fontsize=20)
 
+	print title
 	pl.savefig('{}.pdf'.format(title), bbox_inches='tight', dpi=200)
-	fig.clf()
+	# fig.clf()
 
 if __name__ == '__main__':
 	############################################################################
 	# Branin
-	resultBrEI = np.load('./results/result-braninpy-7859558362.npy')[:, :100]
-	resultBrT = np.load('./results/result-Th-braninpy-7196187393.npy')[:, :100]
+	# resultBrEI = np.load('./results/result-braninpy-7859558362.npy')[:, :100]
+	# resultBrT = np.load('./results/result-Th-braninpy-7196187393.npy')[:, :100]
+	# resultBrEI = np.exp(resultBrEI * np.log(10))
 
-	resultBrEI = np.exp(resultBrEI * np.log(10))
-	resultBrT = resultBrT + computeBest('branin')/10.
+	# resultBrEI = np.load('./results/result-EI-braninpy-5010613689.npy')[:, :100]
+	# resultBrT = np.load('./results/result-Th-braninpy-9300183398.npy')[:, :100]
+	# resultBrPF = np.load('./results/result-PF-braninpy-8083955903.npy')[:, :100]
+	
 
-	results = {'EI-MCMC':(resultBrEI, 'blue'), \
-			   'Thompson-MCMC':(resultBrT, 'green')}
-	title = 'Branin'
-	lineplot(title, results, logscale=True)
+	# resultBrEI = resultBrEI + computeBest('branin')/10.
+	# resultBrT = resultBrT + computeBest('branin')/10.
+	# resultBrPF = resultBrPF + computeBest('branin')/10.
+
+	# results = {'EI-MCMC':(resultBrEI, 'blue'), \
+	# 		   'Thompson-MCMC':(resultBrT, 'green'), \
+	# 		   'PF-MCMC':(resultBrPF, 'red')}
+	# title = 'Branin'
+	# lineplot(title, results, logscale=True)
 	############################################################################
+
+
 
 
 	############################################################################
 	# Hartman 3
-	resultBrEI = np.load('./results/result-hart3py-7277509593.npy')[:, :100]
-	resultBrT = np.load('./results/result-Th-hart3py-5136959805.npy')[:, :100]
+	# resultBrEI = np.load('./results/result-EI-hart3py-1102589765.npy')[:, :100]
+	# resultBrT = np.load('./results/result-Th-hart3py-1333674245.npy')[:, :100]
+	# resultBrPH = np.load('./results/result-PF-hart3py-7745891638.npy')[:, :100]
 
 
-	resultBrEI = np.vstack([resultBrEI[:12, :], resultBrEI[13:, :]])
-	resultBrEI = np.exp(resultBrEI * np.log(10))
-	resultBrT = resultBrT + computeBest('hart3')
-	results = {'EI-MCMC':(resultBrEI, 'blue'), \
-			   'Thompson-MCMC':(resultBrT, 'green')}
-	title = 'Hartmann 3'
-	lineplot(title, results, logscale=True)
+	# resultBrEI = resultBrEI + computeBest('hart3')
+	# resultBrT = resultBrT + computeBest('hart3')
+	# resultBrPH = resultBrPH + computeBest('hart3')
+
+
+	# results = {'EI-MCMC':(resultBrEI, 'blue'), \
+	# 		   'Thompson-MCMC':(resultBrT, 'green'), \
+	# 		   'PF-MCMC':(resultBrPH, 'red')}
+	# title = 'Hartmann 3'
+	# lineplot(title, results, logscale=True)
 	############################################################################
 
 
@@ -104,13 +119,17 @@ if __name__ == '__main__':
 	# resultLADT = resultLADT[1:, :]
 	# resultLADEI = np.vstack([resultLADEI[:-2, :], resultLADEI[-1, :]])
 	
-
-
-
 	resultLADT = np.load('./results/result-Th-lda_grid-8741739500.npy')[:, :50]
 	resultLADEI = np.load('./results/result-EI-lda_grid-9515508804.npy')[:, :50]
+	resultLADPF = np.load('./results/result-PF-lda_grid-2753162303.npy')[:, :50]
+
+	print np.sort(resultLADT[:, 0])
+	print np.sort(resultLADEI[:, 0])
+	print np.sort(resultLADPF[:, 0])
+	
 	results = {'Thompson-MCMC':(resultLADT, 'green'), \
-			   'EI-MCMC':(resultLADEI, 'blue')}
+			   'EI-MCMC':(resultLADEI, 'blue'), \
+			   'PF-MCMC':(resultLADPF, 'red')}
 	title = 'LDA'
 	lineplot(title, results, y_minmax=(1264, 1350))
 	############################################################################
@@ -131,21 +150,53 @@ if __name__ == '__main__':
 
 	resultSVMEI = np.load('./results/result-EI-svm_grid-7518851186.npy')[:, :100]
 	resultSVMTh = np.load('./results/result-Th-svm_grid-7254250177.npy')[:, :100]
+	resultSVMPF = np.load('./results/result-PF-svm_grid-2866798955.npy')[:, :100]
+
+	print np.sort(resultSVMEI[:, 0])
+	print np.sort(resultSVMTh[:, 0])
+	print np.sort(resultSVMPF[:, 0])
 
 	results = {'EI-MCMC':(resultSVMEI, 'blue'), \
-			   'Thompson-MCMC':(resultSVMTh, 'green')}
+			   'Thompson-MCMC':(resultSVMTh, 'green'), \
+			   'PF-MCMC':(resultSVMPF, 'red')}
 	title = 'SVM'
 	lineplot(title, results, y_minmax=(0.24, 0.28))
 	############################################################################
 
 
+
+
 	############################################################################
 	# Logistic
-	resultLogEI = np.load('./results/result-EI-logistic_hpolib-7792985020.npy')[:, :100]
-	resultLogTh = np.load('./results/result-Th-logistic_hpolib-8917306460.npy')[:, :100]
+	resultLogEI = \
+		np.load('./results/result-EI-logistic_hpolib-7792985020.npy')[:, :100]
+	resultLogTh = \
+		np.load('./results/result-Th-logistic_hpolib-8917306460.npy')[:, :100]
+	resultLogPf = \
+		np.load('./results/result-PO-logistic_hpolib-8752363857.npy')[:, :100]
+
 	
 	results = {'EI-MCMC':(resultLogEI, 'blue'), \
-			   'Thompson-MCMC':(resultLogTh, 'green')}
+			   'Thompson-MCMC':(resultLogTh, 'green'), \
+			   'PF-MCMC':(resultLogPf, 'red')}
 	title = 'Logistic'
 	lineplot(title, results, y_minmax=(0.065, 0.1))
+	############################################################################
+
+
+
+
+	############################################################################
+	# Random Forest
+	# resultLogEI = np.load('./results/result-EI-skrf-1356361364.npy')[:, :100]
+	# resultLogTh = np.load('./results/result-Th-skrf-2482106596.npy')[:, :100]
+	# resultLogPF = np.load('./results/result-PF-skrf-7499149250.npy')[:, :100]
+
+
+	# results = {'EI-MCMC':(resultLogEI, 'blue'), \
+	# 		   'Thompson-MCMC':(resultLogTh, 'green'), \
+	# 		   'PF-MCMC':(resultLogPF, 'red')}
+	# title = 'Rf'
+	# lineplot(title, results, y_minmax=(0.04, 0.1))
+	############################################################################
 
