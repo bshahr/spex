@@ -146,10 +146,15 @@ if __name__ == '__main__':
         .2,  0.00, -4.50,
         .07, -5, -2,
         .1,  1.99, -3.50]
+    theta = [0.192545069468, -2.59824457337, -4.77624027894, 0.450462078346, 
+            2.54726731266, -5.78219533407, 0.0520929864638, -6.12032709961, 
+            -5.2387726667]
+
 
     print model.getExpectedReward(theta)
-    model.plot(mpl.gca(), theta, N=10, horizon=50)
-    mpl.show()
+    model.plot(mpl.gca(), theta, N=10, horizon=100)
+    mpl.axis([-6, 5, -8, 1])
+    mpl.savefig('repellers.pdf', bbox_inches='tight')
 
 def main(job_id, params):
     # CREATE THE REWARD MODEL.

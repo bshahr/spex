@@ -39,5 +39,5 @@ def main(job_id, params):
 
 
 if __name__ == "__main__":
-	print rfwine(n_estimators=10, max_depth=200, \
-		min_samples_split=1, min_samples_leaf=1, bootstrap=0, max_features=15)
+	print rfwine(n_estimators=10, max_depth=None, \
+		min_samples_split=2, min_samples_leaf=1, bootstrap=True, max_features='auto')
