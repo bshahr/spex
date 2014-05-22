@@ -24,8 +24,7 @@ def lineplot(title, results, logscale=False, y_minmax=None):
         if maxvali > maxval:
             maxval = maxvali
 
-
-        quants = mquantiles(result, prob=[0.2, 0.5, 0.8], axis=0)
+        quants = mquantiles(result, prob=[0.25, 0.5, 0.75], axis=0)
         x_indices = np.arange(mean.shape[0])+1
 
         pl.fill_between(x_indices, quants[0, :], quants[2, :], \
@@ -55,54 +54,96 @@ def lineplot(title, results, logscale=False, y_minmax=None):
 
     pl.title(title, fontsize=20)
 
-    print title
+    print 'Plotting for {}.'.format(title)
     pl.savefig('{}.pdf'.format(title), bbox_inches='tight', dpi=200)
     # fig.clf()
 
+
+def parse_yaml(yaml_file):
+    import yaml
+    f = open(yaml_file)
+    dataMap = yaml.safe_load(f)
+    f.close()
+
+    for key in dataMap.keys():
+        dictionary = {}
+        number = int(dataMap[key]['number'])
+        logscale = False
+        y_minmax = None
+        if 'min' in dataMap[key]:
+            min_y = float(dataMap[key]['min'])
+            max_y = float(dataMap[key]['max'])
+            y_minmax = (min_y, max_y)
+        for subkey in dataMap[key]['methods']:
+            dataMap[key]['methods'][subkey]
+            best = 0
+            if 'function' in dataMap[key]['methods'][subkey]:
+                best = computeBest(dataMap[key]['methods'][subkey]['function'])
+                if key == 'Branin':
+                    best = best/10.
+                logscale = True
+
+            result = np.load('./results/{}'.format(\
+                dataMap[key]['methods'][subkey]['file']))[:, :number] + best
+            dictionary[dataMap[key]['methods'][subkey]['name']] = \
+                (result, dataMap[key]['methods'][subkey]['color'])
+
+        lineplot(key, dictionary, logscale=logscale, y_minmax=y_minmax)
+
+
+
 if __name__ == '__main__':
-    ############################################################################
-    # Branin
+
+    parse_yaml('ro_plot_config.yaml')
+
+    # ############################################################################
+    # # # Branin
     # resultBrEI = np.load('./results/result-braninpy-7859558362.npy')[:, :100]
-    # resultBrT = np.load('./results/result-Th-braninpy-7196187393.npy')[:, :100]
+    # # resultBrT = np.load('./results/result-Th-braninpy-7196187393.npy')[:, :100]
     # resultBrEI = np.exp(resultBrEI * np.log(10))
 
     # resultBrEI = np.load('./results/result-EI-braninpy-5010613689.npy')[:, :100]
+    # resultBrEIR = np.load('./results/result-EIR-braninpy-7392077481.npy')[:, :100]
     # resultBrT = np.load('./results/result-Th-braninpy-9300183398.npy')[:, :100]
     # resultBrPF = np.load('./results/result-PF-braninpy-8083955903.npy')[:, :100]
     
 
+    # resultBrEIR = resultBrEIR + computeBest('branin')/10.
     # resultBrEI = resultBrEI + computeBest('branin')/10.
-    # resultBrT = resultBrT + computeBest('branin')/10.
-    # resultBrPF = resultBrPF + computeBest('branin')/10.
+    # # resultBrT = resultBrT + computeBest('branin')/10.
+    # # resultBrPF = resultBrPF + computeBest('branin')/10.
 
-    # results = {'EI-MCMC':(resultBrEI, 'blue'), \
-    #          'Thompson-MCMC':(resultBrT, 'green'), \
-    #          'PF-MCMC':(resultBrPF, 'red')}
+    # results = {'RO-MCMC':(resultBrEIR, 'green'), \
+    #            'EI-MCMC':(resultBrEI, 'blue')}
     # title = 'Branin'
     # lineplot(title, results, logscale=True)
-    ############################################################################
+    # ############################################################################
 
 
 
 
-    ############################################################################
-    # Hartman 3
+    # ############################################################################
+    # # Hartman 3
     # resultBrEI = np.load('./results/result-EI-hart3py-1102589765.npy')[:, :100]
-    # resultBrT = np.load('./results/result-Th-hart3py-1333674245.npy')[:, :100]
-    # resultBrPH = np.load('./results/result-PF-hart3py-7745891638.npy')[:, :100]
+    # # resultBrT = np.load('./results/result-Th-hart3py-1333674245.npy')[:, :100]
+    # # resultBrPH = np.load('./results/result-PF-hart3py-7745891638.npy')[:, :100]
+    # resultBrRO = np.load('./results/result-EIR-hart3py-3850523492.npy')[:, :100]
+
+    # print resultBrRO
+    # print computeBest('hart3')
 
 
     # resultBrEI = resultBrEI + computeBest('hart3')
-    # resultBrT = resultBrT + computeBest('hart3')
-    # resultBrPH = resultBrPH + computeBest('hart3')
+    # # resultBrT = resultBrT + computeBest('hart3')
+    # # resultBrPH = resultBrPH + computeBest('hart3')
+    # resultBrRO = resultBrRO + computeBest('hart3')
 
 
-    # results = {'EI-MCMC':(resultBrEI, 'blue'), \
-    #          'Thompson-MCMC':(resultBrT, 'green'), \
-    #          'PF-MCMC':(resultBrPH, 'red')}
+    # results = {'EI-MCMC':(resultBrEI, 'blue'), 
+    #          'RO-MCMC':(resultBrRO, 'green')}
     # title = 'Hartmann 3'
     # lineplot(title, results, logscale=True)
-    ############################################################################
+    # ############################################################################
 
 
 
@@ -201,16 +242,16 @@ if __name__ == '__main__':
 
     ############################################################################
     # Random Forest
-    resultLogEI = np.load('./results/result-EI-repeller-7911680856.npy')[:, :150]
-    resultLogTh = np.load('./results/result-Th-repeller-7900098689.npy')[:, :150]
-    resultLogPF = np.load('./results/result-PF-repeller-9662669862.npy')[:, :150]
+    # resultLogEI = np.load('./results/result-EI-repeller-7911680856.npy')[:, :150]
+    # resultLogTh = np.load('./results/result-Th-repeller-7900098689.npy')[:, :150]
+    # resultLogPF = np.load('./results/result-PF-repeller-9662669862.npy')[:, :150]
 
 
-    results = {'EI-MCMC':(resultLogEI, 'blue'), \
-             'Thompson-MCMC':(resultLogTh, 'green'), \
-             'PF-MCMC':(resultLogPF, 'red')}
-    title = 'Repeller'
-    lineplot(title, results, y_minmax=(-35., -5.))
+    # results = {'EI-MCMC':(resultLogEI, 'blue'), \
+    #          'Thompson-MCMC':(resultLogTh, 'green'), \
+    #          'PF-MCMC':(resultLogPF, 'red')}
+    # title = 'Repeller'
+    # lineplot(title, results, y_minmax=(-35., -5.))
     ############################################################################
 
 

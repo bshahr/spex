@@ -1,0 +1,56 @@
+Branin:
+    number: 100
+    methods:
+        EI:
+            file: result-EI-braninpy-5010613689.npy
+            name: EI-MCMC
+            function: branin
+            color: blue
+        RO:
+            file: result-EIR-braninpy-7392077481.npy
+            name: RO-MCMC
+            function: branin
+            color: green
+
+Hartmann 3:
+    number: 100
+    methods:
+        EI:
+            file: result-EI-hart3py-1102589765.npy
+            name: EI-MCMC
+            color: blue
+            function: hart3
+        RO:
+            file: result-EIR-hart3py-3850523492.npy
+            name: RO-MCMC
+            color: green
+            function: hart3
+
+LDA:
+    number: 50
+    min: 1264
+    max: 1330
+    methods:
+        EI:
+            file: result-EI-lda_grid-9515508804.npy
+            name: EI-MCMC
+            color: blue
+        RO:
+            file: result-EIR-lda_grid-3643026190.npy
+            name: RO-MCMC
+            color: green
+
+SVM:
+    number: 100
+    min: 0.24
+    max: 0.28
+    methods:
+        EI:
+            file: result-EI-svm_grid-7518851186.npy
+            name: EI-MCMC
+            color: blue
+        RO:
+            file: result-EIR-svm_grid-1607817612.npy
+            name: RO-MCMC
+            color: green
+
