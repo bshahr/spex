@@ -36,7 +36,7 @@ LDA:
             name: EI-MCMC
             color: blue
         RO:
-            file: result-EIR-lda_grid-3643026190.npy
+            file: result-EIR-lda_grid-3595376812.npy
             name: RO-MCMC
             color: green
 
@@ -50,7 +50,19 @@ SVM:
             name: EI-MCMC
             color: blue
         RO:
-            file: result-EIR-svm_grid-1607817612.npy
+            file: result-EIR-svm_grid-5439503079.npy
             name: RO-MCMC
             color: green
-
+log:
+    number: 50
+    min: 0.068
+    max: 0.09
+    methods:
+        EI:
+            file: result-EI-logistic-6487702234.npy
+            name: EI-MCMC
+            color: blue
+        RO:
+            file: result-EIR-logistic-3103195760.npy
+            name: RO-MCMC
+            color: green
