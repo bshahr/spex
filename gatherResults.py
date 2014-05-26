@@ -2,7 +2,6 @@ from os import listdir
 from os.path import isfile, isdir, join
 import numpy as np
 import re, os, sys, getopt
-from bo.demos.testFuncs import computeBest
 from numpy import genfromtxt
 import string
 
@@ -46,6 +45,8 @@ def processFile(name, folder):
 	_, indices = np.unique(d[:, 1], return_index=True)
 	indices = [int(index) for index in indices if index > 0]
 	lm = d[indices, 0]
+	if lm.shape[0] < 100:
+		lm = np.hstack([lm, lm[-1]*np.ones(100-lm.shape[0])])
 
 	return lm
 

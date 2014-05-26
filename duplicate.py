@@ -75,7 +75,8 @@ def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
     noiseless=0, use_grad=0):
 
     methods = ['GPEIOptChooser', 'GPThompsonOptChooser', \
-               'GPPortOptChooser', 'GPEIRobustChooser']
+               'GPPortOptChooser', 'GPEIRobustChooser', \
+               'GPPortEntChooser']
 
     origPath = getPath('fcts/{}/'.format(name))
 
@@ -147,22 +148,38 @@ def preparePybo(name='branin', num=20):
 if __name__ == '__main__':
     # prepareSpearmint('rfpy', 20, method=1, max_num=200, \
     #   noiseless=0, use_grad=0)
-    prepareSpearmint_loop('svm_grid', 20, 5, method=1, max_num=100, \
-        noiseless=0, use_grad=0)
-    prepareSpearmint_loop('braninpy', 20, 5, method=1, max_num=100, \
+    #prepareSpearmint_loop('svm_grid', 20, 5, method=1, max_num=100, \
+    #    noiseless=0, use_grad=0)
+    #prepareSpearmint_loop('braninpy', 20, 5, method=1, max_num=100, \
+    #    noiseless=1, use_grad=1)
+    #prepareSpearmint_loop('lda_grid', 20, 5, method=1, max_num=50, \
+    #    noiseless=0, use_grad=0)
+
+    prepareSpearmint('hart3py', 20, method=4, max_num=100, \
         noiseless=1, use_grad=1)
-    prepareSpearmint_loop('lda_grid', 20, 5, method=1, max_num=50, \
-        noiseless=0, use_grad=0)
+
+    prepareSpearmint('braninpy', 20, method=4, max_num=100, \
+        noiseless=1, use_grad=1)
 
 
-    # prepareSpearmint('lda_grid', 20, method=1, max_num=50, \
-    #   noiseless=0, use_grad=0)
+    # prepareSpearmint('lda_grid', 20, method=3, max_num=50, \
+    #    noiseless=0, use_grad=0)
 
-    # prepareSpearmint('svm_grid', 20, method=1, max_num=100, \
-    #   noiseless=0, use_grad=0)
+    # prepareSpearmint('svm_grid', 20, method=3, max_num=100, \
+    #    noiseless=0, use_grad=0)
 
-    # prepareSpearmint('logistic', 20, method=1, max_num=100, \
+    #prepareSpearmint('logistic_hpolib', 20, method=3, max_num=100, \
     #   noiseless=0, use_grad=1)
+
+    # prepareSpearmint('logistic', 20, method=0, max_num=100, \
+    #   noiseless=0, use_grad=1)
+
+    
+    # prepareSpearmint('logistic_hpolib', 20, method=3, max_num=100, \
+    #   noiseless=0, use_grad=1)
+    
+    # prepareSpearmint('repeller', 20, method=3, max_num=200, \
+    #    noiseless=0, use_grad=1)
 
     # preparePybo('branin', 20)
     # preparePybo('rfpy', 20)
