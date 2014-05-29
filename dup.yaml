@@ -1,7 +1,7 @@
 braninpy:
     max_num: 100
     name: braninpy
-    num: 20
+    num: 1
     method: 4
     noiseless: 0
     use_grad: 1

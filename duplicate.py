@@ -135,8 +135,6 @@ def prepareSpearmint_loop(name='braninpy', num=20, single_num=4, method=1, \
 def write_additionals(path, additionals):
     import yaml
     with open('{}add.yaml'.format(path), 'w') as yaml_file:
-        print 'what is happening?'
-        print '{}/add.yaml'.format(path)
         yaml_file.write(yaml.dump(additionals, default_flow_style=True))
 
 
