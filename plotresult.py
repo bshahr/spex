@@ -94,7 +94,8 @@ def parse_yaml(yaml_file):
 
 if __name__ == '__main__':
 
-    parse_yaml('ro_plot_config.yaml')
+    # parse_yaml('ro_plot_config.yaml')
+    parse_yaml('portEnt_plot_config.yaml')
 
     # ############################################################################
     # # # Branin

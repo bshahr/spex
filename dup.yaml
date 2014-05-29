@@ -1,0 +1,11 @@
+braninpy:
+    max_num: 100
+    name: braninpy
+    num: 20
+    method: 4
+    noiseless: 0
+    use_grad: 1
+    additionals:
+        nparticles: 5
+        nsamples: 10
+        esitmator: naive
