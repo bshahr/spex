@@ -76,7 +76,7 @@ def prepareSpearmint(name='braninpy', num=20, method=1, max_num=100, \
 
     methods = ['GPEIOptChooser', 'GPThompsonOptChooser', \
                'GPPortOptChooser', 'GPEIRobustChooser', \
-               'GPPortEntChooser']
+               'GPPortEntChooser', 'GPPortHedgeChooser']
 
     origPath = getPath('fcts/{}/'.format(name))
 

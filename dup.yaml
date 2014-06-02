@@ -1,11 +1,25 @@
-braninpy:
+hart3:
     max_num: 100
-    name: braninpy
+    name: hart3py
     num: 1
     method: 4
     noiseless: 0
     use_grad: 1
     additionals:
         nparticles: 5
-        nsamples: 10
-        esitmator: naive
+        nsamples: 1000
+        estimator: HistogramEntropy
+hart3py_alpha_4:
+    max_num: 100 
+    name: hart3py
+    num: 1
+    method: 4
+    noiseless: 0
+    use_grad: 1
+    additionals:
+        num_hyper_samples: 5
+        nhallucinations: 5
+        nsamples: 500
+        alpha: 0.5 
+        estimator: KnnAlphaDivergenceEstimator
+        nneighbors: 4
