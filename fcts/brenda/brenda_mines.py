@@ -1,15 +1,16 @@
 import numpy as np
-
-from gpbo.model import GPModel
-
+import re, os
 
 class KrigingBrenda:
-    def __init__(self, path="/Users/iassael/code/projects/python/RandomForestGP/", use_gp=False):
+    def __init__(self, use_gp=False):
         # Brenda Mines (Old Brenda), porphyry copper/molybdenum deposit
         # 1800           8           1 -1.0000000E+08
         # X_co-ordinate       Y_co-ordinate       Z_co-ordinate       Cu%
         # Mo%                 length_of_core      From                To
-        data = np.loadtxt(path + 'datasets/BrendaMines.csv', delimiter=',')
+
+        path = re.sub(r'brenda_mines.pyc?', '', \
+            os.path.abspath(__file__))
+        data = np.loadtxt(path + '/BrendaMines.csv', delimiter=',')
 
         self.D = 3
         self.custom_grid = data[:, :3]
@@ -28,15 +29,10 @@ class KrigingBrenda:
             self.gp.optHyperParam(preconditioning=True)
 
     def kriging_brenda(self, x):
-        # print x
-        if self.use_gp:
-            x = x.reshape((-1, self.D))
-            mean, var = self.gp.meanVar(x)
-            return mean
-        else:
-            for i in xrange(self.n):
-                if np.allclose(x, self.custom_grid[i, :]):
-                    return self.Y[i]
+        temp = self.custom_grid/100
+        x = x/100
+        X = x - temp
+        return -self.Y[np.argmin(np.sum(X*X, axis=1))]
 
     def plot(self):
         from matplotlib import rc
@@ -46,8 +42,6 @@ class KrigingBrenda:
         from matplotlib import cm
         import numpy as np
         import seaborn as sns
-        from gpbo.demos.functions.gramacy2d import gramacy2d
-        from gpbo.util.sobol_lib import i4_sobol_generate
 
         sns.set(style="whitegrid")
 
@@ -69,6 +63,15 @@ class KrigingBrenda:
         plt.savefig('{}.pdf'.format(title), bbox_inches='tight', dpi=200)
 
 
+def main(job_id, params):
+    print 'called'
+    kb = KrigingBrenda()
+    print 'Anything printed here will end up in the output directory for job #:', str(job_id)
+    print params
+    return kb.kriging_brenda(np.array([params['X'], params['Y'], params['Z']]).flatten())
+
 
 if __name__ == "__main__":
-    KrigingBrenda().plot()
+    # KrigingBrenda().plot()
+    print KrigingBrenda().kriging_brenda(np.array([ 4301., 5192.9653, 5179.4424]))
+    print KrigingBrenda().Y[0]

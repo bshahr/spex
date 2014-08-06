@@ -1,11 +1,11 @@
 import pylab as pl
 import numpy as np
 import seaborn as sns
-from bo.demos.testFuncs import computeBest
+# from bo.demos.testFuncs import computeBest
 import pandas as pd
 from scipy.stats.mstats import mquantiles
 
-def lineplot(title, results, logscale=False, y_minmax=None):
+def lineplot(title, results, logscale=False, y_minmax=None, plot_mean_std=True):
     fig = pl.figure()
     if not logscale:
         ylabel = 'Min Function Value'
@@ -25,6 +25,14 @@ def lineplot(title, results, logscale=False, y_minmax=None):
             maxval = maxvali
 
         quants = mquantiles(result, prob=[0.25, 0.5, 0.75], axis=0)
+
+        # Use mean and std if desired.
+        if plot_mean_std:
+            quants[1, :] = np.mean(result, axis=0)
+            std = np.sqrt(np.var(result, axis=0))
+            quants[2, :] = quants[1, :] + std
+            quants[0, :] = quants[1, :] - std
+
         x_indices = np.arange(mean.shape[0])+1
 
         pl.fill_between(x_indices, quants[0, :], quants[2, :], \
@@ -94,8 +102,8 @@ def parse_yaml(yaml_file):
 
 if __name__ == '__main__':
 
-    # parse_yaml('ro_plot_config.yaml')
-    parse_yaml('portEnt_plot_config.yaml')
+    parse_yaml('ro_plot_config.yaml')
+    # parse_yaml('portEnt_plot_config.yaml')
 
     # ############################################################################
     # # # Branin
