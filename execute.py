@@ -1,7 +1,6 @@
 """
 This script is meant to be copied into the root directory of each experiment
-by the replicate.py script. The current script generates a jug task for each
-run.
+by the replicate.py script. This script generates a jug task for each run.
 
 Example usage:
 
@@ -52,8 +51,12 @@ def run_spearmint(path, config, seed):
         os.path.join(path, '{0:03d}'.format(seed), 'config.pb')
         ])
 
-    # return output
-    data = loadtxt(os.path.join(path, '{0:03d}'.format(seed), 'trace.txt'))
+    # return results if they exist
+    result_file = os.path.join(path, '{0:03d}'.format(seed), 'trace.txt')
+    try:
+        data = loadtxt(result_file)
+    except IOError:
+        pass
     return data[:, 1]
 
 
