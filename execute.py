@@ -36,8 +36,8 @@ def run_spearmint(path, config, seed):
     function = config.get('function')
     method = config.get('method')
     horizon = config.get('horizon')
-    noiseless = config.get('noiseless')
-    usegrad = config.get('usegrad')
+    noiseless = config.get('noiseless', 0)
+    # usegrad = config.get('usegrad')
 
     # run process
     subprocess.call([
@@ -46,7 +46,7 @@ def run_spearmint(path, config, seed):
         '--method={}'.format(method),
         '--max-finished-jobs={}'.format(horizon),
         '--method-args=noiseless={}'.format(noiseless),
-        '--use-gradient={}'.format(usegrad),
+        # '--use-gradient={}'.format(usegrad),
         '--grid-seed={}'.format(seed),
         os.path.join(path, '{0:03d}'.format(seed), 'config.pb')
         ])
@@ -55,13 +55,13 @@ def run_spearmint(path, config, seed):
     result_file = os.path.join(path, '{0:03d}'.format(seed), 'trace.txt')
     try:
         data = loadtxt(result_file)
+        return data[:, 1]
     except IOError:
         pass
-    return data[:, 1]
 
 
 # fetch path of the experiment config file
-path = os.path.dirname(os.path.realpath(__file__))
+path = os.path.dirname(os.path.abspath(__file__))
 
 # subdirectory name for current function/method pair
 subdirs = os.listdir(path)
@@ -69,11 +69,13 @@ subdirs = os.listdir(path)
 for directory in subdirs:
     current_path = os.path.join(path, directory)
 
-    # make sure current_path is a directory
+    # make sure current_path is a directory with a config file
     if not os.path.isdir(current_path):
         continue
 
     config_file = os.path.join(current_path, 'config.yaml')
+    if not os.path.isfile(config_file):
+        continue
 
     with open(config_file) as f:
         config = yaml.safe_load(f)
