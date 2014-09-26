@@ -99,15 +99,18 @@ if __name__ == '__main__':
     parser.add_argument('config_file')
     args = parser.parse_args()
 
-    # prepare required subdirectories
-    main(args.config_file)
-
+    # get path and execute filenames
     expt_path = os.path.dirname(os.path.realpath(args.config_file))
     execute_path = os.path.join(expt_path, 'execute.py')
     pbs_path = os.path.join(expt_path, 'execute.pbs')
 
+    # prepare required subdirectories
+    if not os.path.isfile(execute_path):
+        main(args.config_file)
+
+
     # print jug or qsub command
-    print '\n' + '=' * 70
+    print '\n' + '=' * 72
     print 'spearmint-experiments:\n'
     print 'Your experiment is now ready to be executed! Run the following from'
     print 'the command line to process locally\n'
@@ -119,5 +122,6 @@ if __name__ == '__main__':
     print 'where by default we request a walltime of 24h, 4gb of memory, and 10'
     print 'jobs. Notice however that submitting this identical job twice will'
     print 'simply double the number of workers on this particular experiment\'s'
-    print 'task queue.\n\n'
+    print 'task queue.\n'
+    print '=' * 72 + '\n'
     
