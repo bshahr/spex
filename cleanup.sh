@@ -30,14 +30,19 @@ for EXPT in $@; do
     fi
 
     # delete execute.py script if it exists
-    EXE_SCRIPT=$EXPT_PATH/execute.py
+    EXE_PY=$EXPT_PATH/execute.py
+    EXE_PBS=$EXPT_PATH/execute.pbs
 
-    if [[ -e "$EXE_SCRIPT" ]]; then
-        rm $EXE_SCRIPT
+    if [[ -e "$EXE_PY" ]]; then
+        rm $EXE_PY
+    fi
+    if [[ -e "$EXE_PBS" ]]; then
+        rm $EXE_PBS
     fi
 done
 
 # unset environment variables
 unset EXPT_PATH
 unset LIST_PATH
-unset EXE_SCRIPT
+unset EXE_PY
+unset EXE_PBS

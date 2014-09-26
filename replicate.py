@@ -82,7 +82,13 @@ def main(config_file):
         prepare_spearmint(expt_path, config)
 
     # copy the execute script that generates/runs jug tasks
-    shutil.copy(os.path.join(root_path, 'execute.py'), expt_path)
+    root_execute_path = os.path.join(root_path, 'execute.py')
+    shutil.copy(root_execute_path, expt_path)
+    expt_execute_path = os.path.join(expt_path, 'execute.py')
+
+    # write pbs file to run jug task
+    with open(os.path.join(expt_path, 'execute.pbs'), 'w') as f:
+        f.write('jug execute {}'.format(expt_execute_path))
 
 
 if __name__ == '__main__':
@@ -96,3 +102,22 @@ if __name__ == '__main__':
     # prepare required subdirectories
     main(args.config_file)
 
+    expt_path = os.path.dirname(os.path.realpath(args.config_file))
+    execute_path = os.path.join(expt_path, 'execute.py')
+    pbs_path = os.path.join(expt_path, 'execute.pbs')
+
+    # print jug or qsub command
+    print '\n' + '=' * 70
+    print 'spearmint-experiments:\n'
+    print 'Your experiment is now ready to be executed! Run the following from'
+    print 'the command line to process locally\n'
+    print '\tbash jug-execute.sh {} -n 8\n'.format(execute_path)
+    print 'where we use 8 as a default number of parallel processes, omitting the'
+    print '`-n 8` option defaults to a single process. Alternatively, to submit a'
+    print 'job to a cluster, run:\n'
+    print '\tqsub -l walltime=24:00:00,mem=4gb -t 1-10 {}\n'.format(pbs_path)
+    print 'where by default we request a walltime of 24h, 4gb of memory, and 10'
+    print 'jobs. Notice however that submitting this identical job twice will'
+    print 'simply double the number of workers on this particular experiment\'s'
+    print 'task queue.\n\n'
+    
