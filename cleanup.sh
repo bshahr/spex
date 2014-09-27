@@ -36,6 +36,9 @@ for EXPT in $@; do
     if [[ -e "$EXE_PY" ]]; then
         rm $EXE_PY
     fi
+    if [[ -e "${EXE_PY}c" ]]; then
+        rm ${EXE_PY}c
+    fi
     if [[ -e "$EXE_PBS" ]]; then
         rm $EXE_PBS
     fi

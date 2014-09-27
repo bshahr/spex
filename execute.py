@@ -52,10 +52,10 @@ def run_spearmint(path, config, seed):
         ])
 
     # return results if they exist
-    result_file = os.path.join(path, '{0:03d}'.format(seed), 'trace.txt')
+    result_file = os.path.join(path, '{0:03d}'.format(seed), 'trace.csv')
     try:
-        data = loadtxt(result_file)
-        return data[:, 1]
+        data = loadtxt(result_file, skiprows=1, delimiter=',')
+        return data[1:, 1]
     except IOError:
         pass
 
@@ -66,6 +66,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 # subdirectory name for current function/method pair
 subdirs = os.listdir(path)
 
+data = dict()
 for directory in subdirs:
     current_path = os.path.join(path, directory)
 
@@ -77,10 +78,13 @@ for directory in subdirs:
     if not os.path.isfile(config_file):
         continue
 
+    function, _, method = directory.partition('-')
+    if function not in data.keys():
+        data[function] = dict()
+
     with open(config_file) as f:
         config = yaml.safe_load(f)
 
-    nreps = config.get('nreps')
-    for seed in range(nreps):
-        run_spearmint(current_path, config, seed)
+    data[function][method] = [run_spearmint(current_path, config, seed)
+                              for seed in range(config.get('nreps', 1))]
 
