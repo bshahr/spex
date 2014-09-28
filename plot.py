@@ -1,3 +1,11 @@
+"""
+Script used to plot results that were run by jug.
+
+Matt Hoffman
+Edited by Bobak Shahriari
+26 September 2014
+"""
+
 import matplotlib
 matplotlib.use('pdf')
 
@@ -43,7 +51,14 @@ for function in data.keys():
     ax.set_xlabel('iterations')
     ax.set_ylabel('function value')
     ax.legend(loc='best')
-    ax.figure.tight_layout()
     ax.figure.canvas.draw()
-    ax.figure.savefig('%s.pdf' % function, bbox_inches='tight')
+
+    # save figure
+    figpath = os.path.dirname(os.path.realpath(__file__))
+    figpath = os.path.join(figpath, 'figures')
+    if not os.path.isdir(figpath):
+        os.mkdir(figpath)
+    figpath = os.path.join(figpath, '{}.pdf'.format(function))
+    print figpath
+    ax.figure.savefig(figpath, bbox_inches='tight')
 

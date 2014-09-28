@@ -1,0 +1,7 @@
+branin:
+    function: braninpy
+    method: GPEIOptChooser
+    horizon: 50
+    nreps: 100
+    noiseless: 0
+    usegrad: 1

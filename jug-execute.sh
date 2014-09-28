@@ -2,7 +2,11 @@
  
 let MAX_NJOBS=10
 let NJOBS=1     # default number of parallel jobs
-SCRIPT=$1
+if [[ -d $1 ]]; then
+    SCRIPT=$1/execute.py
+elif [[ -f $1 ]]; then
+    SCRIPT=$1
+fi
 OPTIND=2
 
 # fetch number of parallel jobs

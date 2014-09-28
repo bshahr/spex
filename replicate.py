@@ -96,17 +96,17 @@ if __name__ == '__main__':
 
     # fetch config filename
     parser = argparse.ArgumentParser()
-    parser.add_argument('config_file')
+    parser.add_argument('experiment_path')
     args = parser.parse_args()
 
     # get path and execute filenames
-    expt_path = os.path.dirname(os.path.realpath(args.config_file))
-    execute_path = os.path.join(expt_path, 'execute.py')
+    expt_path = args.experiment_path.rstrip('/')
     pbs_path = os.path.join(expt_path, 'execute.pbs')
 
     # prepare required subdirectories
-    if not os.path.isfile(execute_path):
-        main(args.config_file)
+    config_file = os.path.join(expt_path, 'config.yaml')
+    if not os.path.isfile(pbs_path):
+        main(config_file)
 
 
     # print jug or qsub command
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     print 'spearmint-experiments:\n'
     print 'Your experiment is now ready to be executed! Run the following from'
     print 'the command line to process locally\n'
-    print '\tbash jug-execute.sh {} -n 8\n'.format(execute_path)
+    print '\tbash jug-execute.sh {} -n 8\n'.format(expt_path)
     print 'where we use 8 as a default number of parallel processes, omitting the'
     print '`-n 8` option defaults to a single process. Alternatively, to submit a'
     print 'job to a cluster, run:\n'
