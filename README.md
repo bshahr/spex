@@ -31,6 +31,13 @@ can monitor the progress of said tasks by running:
 
     jug status experiments/branin/execute.py
 
+If you prefer to plot or manipulate the results yourself, you can
+also run:
+
+    python gather.py experiments/branin
+
+which will pickle the results in `results/branin.pkl`.
+
 Alternatively, the `replicate.py` script will give you the exact
 command to run on a cluster to submit a job to TORQUE. It will look
 something like:

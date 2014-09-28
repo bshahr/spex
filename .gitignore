@@ -4,3 +4,5 @@
 *.txt
 *.npy
 experiments
+results
+figures
