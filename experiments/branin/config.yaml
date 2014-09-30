@@ -1,7 +1,19 @@
-branin:
-    function: braninpy
+#
+# Acquisition functions
+
+PortfolioBraninEi: &experiment
     method: GPEIOptChooser
-    horizon: 50
-    nreps: 100
-    noiseless: 0
-    usegrad: 1
+    function: &function braninpy
+    horizon: &horizon 50
+    nreps: &nreps 20
+    noiseless: &noiseless 0
+    usegrad: &usegrad 1
+
+PortfolioBraninPi:
+    <<: *experiment
+    method: GPPIOptChooser
+
+PortfolioBraninTh:
+    <<: *experiment
+    method: GPThompsonOptChooser
+
