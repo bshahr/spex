@@ -5,13 +5,13 @@ by the replicate.py script. This script generates a jug task for each run.
 Example usage:
 
     # run replicate.py to create subdirectories and tasks
-    python replicate.py experiment-directory/config.yaml
+    python replicate.py <experiment-directory>
 
     # use jug to execute tasks
-    jug execute experiment-directory/execute.py
+    jug execute <experiment-directory>
 
     # use the following to track progress
-    jug status experiment-directory/execute.py
+    jug status <experiment-directory>/execute.py
 
 
 Bobak Shahriari

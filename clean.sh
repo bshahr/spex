@@ -8,11 +8,11 @@
 #
 # Usage:
 #
-#   bash cleanup.sh experiments/<experiment_directory>
+#   bash clean.sh experiments/<experiment_directory>
 #
 # or, to clean all experiments directories:
 #
-#   bash cleanup.sh experiments/*
+#   bash clean.sh experiments/*
 #
 #
 # Bobak Shahriari
