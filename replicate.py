@@ -47,9 +47,10 @@ def prepare_spearmint(expt_path, config):
             continue
 
         # write yaml file that configures the method
-        fname = os.path.join(destination_path, 'add.yaml')
-        with open(fname, 'w') as f:
-            f.write(yaml.dump(methargs, default_flow_style=True))
+        if methargs is not None:
+            fname = os.path.join(destination_path, 'add.yaml')
+            with open(fname, 'w') as f:
+                f.write(yaml.dump(methargs, default_flow_style=True))
 
     # dump yaml file for this particular configuration
     with open(os.path.join(expt_path, 'config.yaml'), 'w') as f:
