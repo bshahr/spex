@@ -29,37 +29,6 @@ from numpy import loadtxt
 HOME = os.environ['HOME']
 SPEARMINT = os.path.join(HOME, 'spearmint/spearmint/bin/spearmint')
 
-@jug.TaskGenerator
-def run_spearmint(path, config, seed):
-
-    # unpack configuration
-    function = config.get('function')
-    method = config.get('method')
-    horizon = config.get('horizon')
-    noiseless = config.get('noiseless', 0)
-    # usegrad = config.get('usegrad')
-
-    # run process
-    subprocess.call([
-        SPEARMINT,
-        '--driver=local',
-        '--method={}'.format(method),
-        '--max-finished-jobs={}'.format(horizon),
-        '--method-args=noiseless={}'.format(noiseless),
-        # '--use-gradient={}'.format(usegrad),
-        '--grid-seed={}'.format(seed),
-        os.path.join(path, '{0:03d}'.format(seed), 'config.pb')
-        ])
-
-    # return results if they exist
-    result_file = os.path.join(path, '{0:03d}'.format(seed), 'trace.csv')
-    try:
-        data = loadtxt(result_file, skiprows=1, delimiter=',')
-        return data[1:, 1]
-    except IOError:
-        pass
-
-
 # fetch path of the experiment config file
 path = os.path.dirname(os.path.abspath(__file__))
 
@@ -78,13 +47,51 @@ for directory in subdirs:
     if not os.path.isfile(config_file):
         continue
 
-    function, _, method = directory.partition('-')
-    if function not in data.keys():
-        data[function] = dict()
-
+    # load config file
     with open(config_file) as f:
         config = yaml.safe_load(f)
 
-    data[function][method] = [run_spearmint(current_path, config, seed)
+    function = config.get('function')
+    method = config.get('method')
+    if function not in data.keys():
+        data[function] = dict()
+
+    def execute(expt_path, config, seed):
+        # unpack configuration
+        function = config.get('function')
+        method = config.get('method')
+        horizon = config.get('horizon')
+        noiseless = config.get('noiseless', 0)
+        # usegrad = config.get('usegrad')
+
+        # run process
+        subprocess.call([
+            SPEARMINT,
+            '--driver=local',
+            '--method={}'.format(method),
+            '--max-finished-jobs={}'.format(horizon),
+            '--method-args=noiseless={}'.format(noiseless),
+            # '--use-gradient={}'.format(usegrad),
+            '--grid-seed={}'.format(seed),
+            os.path.join(expt_path, '{0:03d}'.format(seed), 'config.pb')
+            ])
+
+        # return results if they exist
+        result_file = os.path.join(expt_path,
+                                   '{0:03d}'.format(seed),
+                                   'trace.csv')
+        try:
+            data = loadtxt(result_file, skiprows=1, delimiter=',')
+            return data[1:, 1]
+        except IOError:
+            pass
+
+    # rename task to match config key
+    execute.__name__ = directory
+
+    # generate jug task
+    jug_task = jug.TaskGenerator(execute)
+
+    data[function][method] = [jug_task(current_path, config, seed)
                               for seed in range(config.get('nreps', 1))]
 
