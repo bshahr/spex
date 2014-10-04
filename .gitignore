@@ -3,6 +3,7 @@
 *.pdf
 *.txt
 *.npy
+functions
 experiments
 results
 figures
