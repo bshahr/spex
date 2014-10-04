@@ -23,6 +23,7 @@ import shutil
 import yaml
 import jug
 import subprocess
+import spearmint
 from numpy import loadtxt
 
 # get path to spearmint binary
