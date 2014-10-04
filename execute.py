@@ -26,8 +26,7 @@ import subprocess
 from numpy import loadtxt
 
 # get path to spearmint binary
-HOME = os.environ['HOME']
-SPEARMINT = os.path.join(HOME, 'spearmint/spearmint/bin/spearmint')
+SPEARMINT = os.path.abspath(os.path.dirname(os.path.abspath(spearmint.__file__)) + '/../bin/spearmint')
 
 # fetch path of the experiment config file
 path = os.path.dirname(os.path.abspath(__file__))
