@@ -39,6 +39,8 @@ def prepare_spearmint(expt_path, config):
         # generate subdirectory name and path for this repetition
         seeddir = '{0:03d}'.format(seed)
         destination_path = os.path.join(expt_path, seeddir)
+        if os.path.isdir(destination_path):
+            continue
 
         # copy directory tree
         try:
@@ -99,8 +101,7 @@ if __name__ == '__main__':
 
     # prepare required subdirectories
     config_file = os.path.join(expt_path, 'config.yaml')
-    if not os.path.isfile(pbs_path):
-        main(config_file)
+    main(config_file)
 
 
     # print jug or qsub command
