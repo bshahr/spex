@@ -27,7 +27,8 @@ import spearmint
 from numpy import loadtxt
 
 # get path to spearmint binary
-SPEARMINT = os.path.abspath(os.path.dirname(os.path.abspath(spearmint.__file__)) + '/../bin/spearmint')
+SPEARMINT = os.path.dirname(os.path.abspath(spearmint.__file__))
+SPEARMINT = os.path.abspath(SPEARMINT + '/../bin/spearmint')
 
 # fetch path of the experiment config file
 path = os.path.dirname(os.path.abspath(__file__))
