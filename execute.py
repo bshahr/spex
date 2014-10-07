@@ -23,11 +23,12 @@ import shutil
 import yaml
 import jug
 import subprocess
+import spearmint
 from numpy import loadtxt
 
 # get path to spearmint binary
-HOME = os.environ['HOME']
-SPEARMINT = os.path.join(HOME, 'spearmint/spearmint/bin/spearmint')
+SPEARMINT = os.path.dirname(os.path.abspath(spearmint.__file__))
+SPEARMINT = os.path.abspath(SPEARMINT + '/../bin/spearmint')
 
 # fetch path of the experiment config file
 path = os.path.dirname(os.path.abspath(__file__))
