@@ -92,6 +92,6 @@ for directory in subdirs:
     # generate jug task
     jug_task = jug.TaskGenerator(execute)
 
-    data[function][method] = [jug_task(current_path, config, seed)
+    data[function][directory] = [jug_task(current_path, config, seed)
                               for seed in range(config.get('nreps', 1))]
 
