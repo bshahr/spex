@@ -23,7 +23,7 @@ import shutil
 import yaml
 import jug
 import subprocess
-from numpy import loadtxt
+import numpy as np
 
 # get path to spearmint binary
 HOME = os.environ['HOME']
@@ -81,8 +81,12 @@ for directory in subdirs:
                                    '{0:03d}'.format(seed),
                                    'trace.csv')
         try:
-            data = loadtxt(result_file, skiprows=1, delimiter=',')
-            return data[1:, 1]
+            data = np.loadtxt(result_file, skiprows=1, delimiter=',')
+            output = np.empty(np.max(data[:,-1]))
+            for k, v in zip(data[:,-1], data[:,1]):
+                output[k-1] = v
+            return output
+
         except IOError:
             pass
 
