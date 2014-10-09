@@ -9,6 +9,8 @@ Installation
 
 `spex` requires a working
 [spearmint repo](http://github.com/JasperSnoek/spearmint "spearmint"),
+where the root directory of the cloned repo (containing bin, examples,
+spearmint) has to be appended to the PYTHONPATH environment variable,
 and [jug](http://luispedro.org/software/jug "jug") which is used to
 process batch experiments and can simply be installed using pip, i.e.,
 
