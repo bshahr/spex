@@ -63,6 +63,7 @@ for directory in subdirs:
         method = config.get('method')
         horizon = config.get('horizon')
         noiseless = config.get('noiseless', 0)
+        gridsize = config.get('gridsize', 20000)
         # usegrad = config.get('usegrad')
 
         # run process
@@ -73,6 +74,7 @@ for directory in subdirs:
             '--max-finished-jobs={}'.format(horizon),
             '--method-args=noiseless={}'.format(noiseless),
             # '--use-gradient={}'.format(usegrad),
+            '--grid-size={}'.format(gridsize),
             '--grid-seed={}'.format(seed),
             os.path.join(expt_path, '{0:03d}'.format(seed), 'config.pb')
             ])
@@ -99,4 +101,3 @@ for directory in subdirs:
 
     data[function][directory] = [jug_task(current_path, config, seed)
                               for seed in range(config.get('nreps', 1))]
-
